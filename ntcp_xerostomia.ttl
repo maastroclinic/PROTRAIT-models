@@ -47,7 +47,7 @@ model:lp_operation rdf:type fml:Addition;
     fml:Primary_operation_value_reference model:intercept;
     fml:Secondary_operation_value_reference model:multiplicationfactor_HN_BL_THERRT_OAR_PARO_SQRT;
     fml:Secondary_operation_value_reference model:multiplicationfactor_HN_BL_THERRT_OAR_SUBM;
-    fml:Secondary_operation_value_reference model:multiplicationfactor_HN_BL_SCORE_XEROSTOMIA;
+    fml:Secondary_operation_value_reference model:multiplicationfactor_HN_BL_SCORE_XEROSTOMIA.
 
 model:intercept rdf:type model:Intercept;
     model:has_value "-3.7286"^^xsd:decimal.
@@ -87,7 +87,7 @@ model:OutputFeature_HN_BL_TOX_XEROSTOMIA rdf:type fml:Probability;
 model:NTCP_model_objective rdf:type fml:Prediction;
     rdfs:label "PROTRAIT NTCP for xerostomia";
     fml:model_parameter_name "baseline xerostomia";
-    fml:prediction_of model:Logistic_Regression;
+    fml:prediction_of model:xerostomia;
     fml:based_on_parameter model:OutputFeature_HN_BL_TOX_XEROSTOMIA.
 
-model:Logistic_Regression rdf:type MAMO:0000075.
+model:xerostomia rdf:type ncit:C26917.
