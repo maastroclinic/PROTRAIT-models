@@ -1,0 +1,93 @@
+@prefix model: <./#>.
+@prefix fml: <https://fairmodels.org/ontology.owl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix ncit: <http://ncicb.nci.nih.gov/xml/owl/EVS/Thesaurus.owl#>.
+@prefix roo: <http://www.cancerdata.org/roo/>.
+@prefix icd: <http://purl.bioontology.org/ontology/ICD10/>.
+@prefix uo: <http://purl.obolibrary.org/obo/UO_>.
+@prefix time: <http://www.w3.org/2006/time#>.
+@prefix MAMO: <http://www.w3.org/2002/07/owl#Thing>.
+
+model: rdf:type fml:Model;
+    rdfs:label "PROTRAIT NTCP for xerostomia";
+    fml:contains_algorithm model:NTCP_clinical_algorithm;
+    fml:needs_information_element model:HN_BL_THERRT_OAR_PARO_SQRT_InformationElement;
+    fml:needs_information_element model:HN_BL_THERRT_OAR_SUBM_InformationElement;
+    fml:needs_information_element model:HN_BL_SCORE_XEROSTOMIA_InformationElement;
+    fml:has_objective model:NTCP_model_objective.
+
+model:category rdf:type fml:category.
+model:numeric rdf:type fml:numeric.
+
+model:HN_BL_THERRT_OAR_PARO_SQRT_InformationElement rdf:type fml:InformationElement;
+    rdf:type roo:HN_BL_THERRT_OAR_PARO_SQRT;
+    fml:is_variable_type model:numeric.
+
+model:HN_BL_THERRT_OAR_SUBM_InformationElement rdf:type fml:InformationElement;
+    rdf:type roo:HN_BL_THERRT_OAR_SUBM;
+    fml:is_variable_type model:numeric.
+
+model:HN_BL_SCORE_XEROSTOMIA_InformationElement rdf:type fml:InformationElement;
+    rdf:type roo:HN_BL_SCORE_XEROSTOMIA;
+    fml:is_variable_type model:numeric.
+
+model:NTCP_clinical_algorithm rdf:type fml:Logistic_Regression;
+    fml:has_input_parameter model:InputFeature_HN_BL_THERRT_OAR_PARO_SQRT;
+    fml:has_input_parameter model:InputFeature_HN_BL_THERRT_OAR_SUBM;
+    fml:has_input_parameter model:InputFeature_HN_BL_SCORE_XEROSTOMIA;
+    fml:has_output_parameter model:OutputFeature_HN_BL_TOX_XEROSTOMIA;
+    fml:contains_algorithm model:Logistic_Regression_Predictor.
+
+model:linear_predictor rdf:type fml:Logistic_Regression_Predictor;
+    fml:contains_operation model:lp_operation. 
+
+model:lp_operation rdf:type fml:Addition;
+    fml:Primary_operation_value_reference model:intercept;
+    fml:Secondary_operation_value_reference model:multiplicationfactor_HN_BL_THERRT_OAR_PARO_SQRT;
+    fml:Secondary_operation_value_reference model:multiplicationfactor_HN_BL_THERRT_OAR_SUBM;
+    fml:Secondary_operation_value_reference model:multiplicationfactor_HN_BL_SCORE_XEROSTOMIA;
+
+model:intercept rdf:type model:Intercept;
+    model:has_value "-3.7286"^^xsd:decimal.
+
+model:multiplicationfactor_cT rdf:type model:multiplication_factor;
+    fml:Primary_operation_value_reference model:InputFeature_HN_BL_THERRT_OAR_PARO_SQRT;
+    fml:secondary_operation_value "0.0855"^^xsd:decimal.
+
+model:multiplicationfactor_cN rdf:type model:multiplication_factor;
+    fml:Primary_operation_value_reference model:InputFeature_HN_BL_THERRT_OAR_SUBM;
+    fml:secondary_operation_value "0.0156"^^xsd:decimal.
+
+model:multiplicationfactor_tLength rdf:type model:multiplication_factor;
+    fml:Primary_operation_value_reference model:InputFeature_HN_BL_SCORE_XEROSTOMIA;
+    fml:secondary_operation_value "1"^^xsd:double.
+
+model:InputFeature_HN_BL_THERRT_OAR_PARO_SQRT rdf:type fml:Algorithm_Input_Parameter;
+    fml:model_parameter_name "HN_BL_THERRT_OAR_PARO_SQRT";
+    fml:is_variable_type model:numeric;
+    fml:based_on_information_element model:HN_BL_THERRT_OAR_PARO_SQRT_InformationElement.
+
+model:InputFeature_HN_BL_THERRT_OAR_SUBM rdf:type fml:Algorithm_Input_Parameter;
+    fml:model_parameter_name "HN_BL_THERRT_OAR_SUBM";
+    fml:is_variable_type model:numeric;
+    fml:based_on_information_element model:HN_BL_THERRT_OAR_SUBM_InformationElement.
+
+model:InputFeature_HN_BL_SCORE_XEROSTOMIA rdf:type fml:Algorithm_Input_Parameter;
+    fml:model_parameter_name "HN_BL_SCORE_XEROSTOMIA";
+    fml:is_variable_type model:numeric;
+    fml:based_on_information_element model:HN_BL_SCORE_XEROSTOMIA_InformationElement.
+
+model:OutputFeature_HN_BL_TOX_XEROSTOMIA rdf:type fml:Probability;
+    rdfs:label "HN_BL_TOX_XEROSTOMIA";
+    fml:model_parameter_name "baseline xerostomia";
+    fml:probability_of model:HN_BL_TOX_XEROSTOMIA_InformationElement.
+
+model:NTCP_model_objective rdf:type fml:Prediction;
+    rdfs:label "PROTRAIT NTCP for xerostomia";
+    fml:model_parameter_name "baseline xerostomia";
+    fml:prediction_of model:Logistic_Regression;
+    fml:based_on_parameter model:OutputFeature_HN_BL_TOX_XEROSTOMIA.
+
+model:Logistic_Regression rdf:type MAMO:0000075.
