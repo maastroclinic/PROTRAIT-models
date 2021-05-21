@@ -8,7 +8,6 @@
 @prefix icd: <http://purl.bioontology.org/ontology/ICD10/>.
 @prefix uo: <http://purl.obolibrary.org/obo/UO_>.
 @prefix time: <http://www.w3.org/2006/time#>.
-@prefix MAMO: <http://www.w3.org/2002/07/owl#Thing>.
 
 model: rdf:type fml:Model;
     rdfs:label "PROTRAIT NTCP for xerostomia";
@@ -24,6 +23,11 @@ model:numeric rdf:type fml:numeric.
 model:HN_BL_THERRT_OAR_PARO_SQRT_InformationElement rdf:type fml:InformationElement;
     rdf:type roo:HN_BL_THERRT_OAR_PARO_SQRT;
     fml:is_variable_type model:numeric.
+
+roo:HN_BL_THERRT_OAR_PARO_SQRT rdfs:label "Square root of the Dmean to the parotis".
+roo:HN_BL_THERRT_OAR_SUBM rdfs:label "Dmean of both the submandibulares".
+roo:HN_BL_SCORE_XEROSTOMIA rdfs:label "Baseline xerostomia score".
+roo:HN_BL_TOX_XEROSTOMIA rdfs:label "Baseline xerostomia grade 2 or 3".
 
 model:HN_BL_THERRT_OAR_SUBM_InformationElement rdf:type fml:InformationElement;
     rdf:type roo:HN_BL_THERRT_OAR_SUBM;
